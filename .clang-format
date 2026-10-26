@@ -1,0 +1,23 @@
+Language: Cpp
+
+BasedOnStyle: Google
+Standard: Latest
+
+IncludeBlocks: Preserve
+
+ReflowComments: Never
+
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+
+AlignAfterOpenBracket: BlockIndent
+
+BreakAfterAttributes: Leave
+
+BinPackArguments: false
+BinPackParameters: OnePerLine
+
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+
+PackConstructorInitializers: Never

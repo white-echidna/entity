@@ -1,0 +1,56 @@
+{
+  "version": 10,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 31
+  },
+  "include": ["conan-presets.json", "cmake/presets/project-base.json"],
+  "configurePresets": [
+    {
+      "name": "release",
+      "displayName": "Release",
+      "description": "Configures Release build",
+      "inherits": ["conan-release", "project-base"]
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "description": "Configures Debug build",
+      "inherits": ["conan-debug", "project-base"]
+    },
+    {
+      "name": "entity-tests",
+      "displayName": "Tests",
+      "description": "Configures tests",
+      "inherits": ["conan-debug", "project-base"],
+      "cacheVariables": {
+        "ENTITY_BUILD_TESTS": true
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "release",
+      "displayName": "Release build",
+      "configurePreset": "release"
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug build",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "entity-tests",
+      "displayName": "Build tests",
+      "configurePreset": "entity-tests",
+      "targets": ["entity_tests"]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "entity-tests",
+      "displayName": "Run tests",
+      "configurePreset": "entity-tests"
+    }
+  ]
+}

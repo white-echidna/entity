@@ -1,0 +1,41 @@
+version: "3"
+
+vars:
+  BUILD_DIR: "{{.ROOT_DIR}}/build"
+
+tasks:
+  default:
+    desc: "List available tasks"
+    cmds:
+      - task --list
+
+  # ---------------------------------------------------------------
+  # build:<preset> — configure and build a preset
+  # ---------------------------------------------------------------
+  build:*:
+    desc: "Configure and build a CMake preset"
+    vars:
+      PRESET: "{{index .MATCH 0}}"
+    cmds:
+      - cmake --preset {{.PRESET}}
+      - cmake --build --preset {{.PRESET}}
+
+  # ---------------------------------------------------------------
+  # test:<preset> — run ctest for the specified test preset
+  # ---------------------------------------------------------------
+  test:*:
+    desc: "Run tests for a CMake test preset"
+    vars:
+      PRESET: "{{index .MATCH 0}}"
+    deps:
+      - task: build:{{.PRESET}}
+    cmds:
+      - ctest --preset {{.PRESET}}
+
+  # ---------------------------------------------------------------
+  # clean — remove the build directory
+  # ---------------------------------------------------------------
+  clean:
+    desc: "Remove the build directory"
+    cmds:
+      - rm -rf {{.BUILD_DIR}}

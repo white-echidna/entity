@@ -1,0 +1,19 @@
+* text=auto eol=lf
+
+*.cpp text eol=lf diff=cpp
+*.hpp text eol=lf diff=cpp
+
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+.clangd        text eol=lf
+.clang-format  text eol=lf
+.clang-tidy    text eol=lf
+.editorconfig  text eol=lf
+.gitattributes text eol=lf
+.gitignore     text eol=lf
+.gitmodules    text eol=lf
+
+CMakeLists.txt text eol=lf
+*.cmake        text eol=lf

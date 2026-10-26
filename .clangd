@@ -1,0 +1,10 @@
+Index:
+  Background: Skip
+  StandardLibrary: true
+
+CompileFlags:
+  CompilationDatabase: build
+
+Diagnostics:
+  MissingIncludes: Strict
+  UnusedIncludes: Strict
