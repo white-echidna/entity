@@ -4,6 +4,7 @@ find_package(doctest REQUIRED)
 set(ENTITY_TESTS_SOURCES
     # Entity Component System
     "src/ecs/test_entity_manager.cpp"
+    "src/ecs/test_sparse_set.cpp"
 )
 
 add_executable(entity_tests)
