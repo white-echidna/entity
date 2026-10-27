@@ -16,6 +16,7 @@ set(ENTITY_PUBLIC_SOURCES
     "include/entity/strong_alias.hpp"
 
     "include/entity/ecs/entity.hpp"
+    "include/entity/ecs/component_pool.hpp"
     "include/entity/ecs/entity_manager.hpp"
     "include/entity/ecs/sparse_set.hpp"
     "include/entity/ecs/storage.hpp"

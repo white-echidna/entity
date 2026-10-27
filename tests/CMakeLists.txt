@@ -3,6 +3,7 @@ find_package(doctest CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 
 set(ENTITY_TESTS_SOURCES
+    "src/ecs/test_component_pool.cpp"
     "src/ecs/test_entity_manager.cpp"
     "src/ecs/test_sparse_set.cpp"
     "src/ecs/test_storage.cpp"
