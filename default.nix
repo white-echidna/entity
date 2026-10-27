@@ -1,12 +1,13 @@
-{ lib
-, llvmPackages
-, cmake
-, ninja
-, doctest
-, glm
+{
+  lib,
+  llvmPackages,
+  cmake,
+  ninja,
+  doctest,
+  glm,
 }:
 
-llvmPackages.stdenv.mkDerivation rec {
+llvmPackages.libcxxStdenv.mkDerivation {
   pname = "entity";
   version = "0.1.0";
 
@@ -17,7 +18,7 @@ llvmPackages.stdenv.mkDerivation rec {
     ninja
   ];
 
-  buildInputs = with pkgs; [
+  buildInputs = [
     doctest
     glm
   ];

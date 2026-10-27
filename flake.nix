@@ -4,37 +4,47 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, utils, ... }:
-    utils.lib.eachSystem [
-      "x86_64-linux"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "aarch64-darwin"
-    ] (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        devShells.default = pkgs.mkShell rec {
-          name = "entity";
+  outputs =
+    { nixpkgs, utils, ... }:
+    utils.lib.eachSystem
+      [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ]
+      (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          devShells.default =
+            pkgs.mkShell.override
+              {
+                stdenv = pkgs.llvmPackages.libcxxStdenv;
+              }
+              {
+                name = "entity";
 
-          packages = with pkgs; [
-            llvmPackages.clang
-            llvmPackages.clang-tools
+                packages = with pkgs; [
+                  llvmPackages.clang
+                  llvmPackages.clang-tools
 
-            cmake
-            ninja
+                  cmake
+                  ninja
 
-            doctest
-            glm
-          ];
+                  doctest
+                  glm
+                ];
 
-          shellHook = ''
-            export CMAKE_GENERATOR="Ninja"
-            export CMAKE_EXPORT_COMPILE_COMMANDS="On"
-          '';
-        };
+                shellHook = ''
+                  export CMAKE_GENERATOR="Ninja"
+                  export CMAKE_EXPORT_COMPILE_COMMANDS="On"
+                '';
+              };
 
-        packages.default = pkgs.callPackage ./default.nix {};
-      });
+          packages.default = pkgs.callPackage ./default.nix { };
+        }
+      );
 }
