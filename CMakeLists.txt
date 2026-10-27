@@ -19,6 +19,7 @@ set(ENTITY_PUBLIC_SOURCES
     "include/entity/ecs/entity_manager.hpp"
     "include/entity/ecs/sparse_set.hpp"
     "include/entity/ecs/storage.hpp"
+    "include/entity/ecs/view.hpp"
 )
 
 set(ENTITY_PRIVATE_SOURCES

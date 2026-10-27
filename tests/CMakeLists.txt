@@ -6,6 +6,7 @@ set(ENTITY_TESTS_SOURCES
     "src/ecs/test_entity_manager.cpp"
     "src/ecs/test_sparse_set.cpp"
     "src/ecs/test_storage.cpp"
+    "src/ecs/test_view.cpp"
 )
 
 add_executable(entity_tests)
