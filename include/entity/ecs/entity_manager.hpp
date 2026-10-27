@@ -33,7 +33,8 @@ class ENTITY_EXPORT EntityManager {
   // Creates and returns a new unique entity.
   [[nodiscard]] auto create() -> Entity;
 
-  // Destroys `entity` and invalidates it. Does nothing if `entity` is already invalid.
+  // Destroys `entity` and invalidates it.
+  // Does nothing if `entity` is already invalid.
   void destroy(Entity entity);
 
   // --- Lookup ---
