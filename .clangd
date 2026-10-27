@@ -8,3 +8,7 @@ CompileFlags:
 Diagnostics:
   MissingIncludes: Strict
   UnusedIncludes: Strict
+  Includes:
+    IgnoreHeader:
+      - .*GL/gl.h
+      - .*glm/.*

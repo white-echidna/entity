@@ -26,6 +26,7 @@
             ninja
 
             doctest
+            glm
           ];
 
           shellHook = ''

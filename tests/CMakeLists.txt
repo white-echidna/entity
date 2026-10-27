@@ -1,10 +1,11 @@
 
-find_package(doctest REQUIRED)
+find_package(doctest CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 set(ENTITY_TESTS_SOURCES
-    # Entity Component System
     "src/ecs/test_entity_manager.cpp"
     "src/ecs/test_sparse_set.cpp"
+    "src/ecs/test_storage.cpp"
 )
 
 add_executable(entity_tests)
@@ -25,6 +26,7 @@ target_link_libraries(
         entity_private_headers
 
         doctest::doctest
+        glm::glm
 )
 
 include(doctest)

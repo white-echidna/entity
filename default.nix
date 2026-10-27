@@ -3,6 +3,7 @@
 , cmake
 , ninja
 , doctest
+, glm
 }:
 
 llvmPackages.stdenv.mkDerivation rec {
@@ -18,5 +19,6 @@ llvmPackages.stdenv.mkDerivation rec {
 
   buildInputs = with pkgs; [
     doctest
+    glm
   ];
 }
