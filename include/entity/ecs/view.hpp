@@ -23,7 +23,6 @@ class View {
   using component_type = Storage<T>::value_type;
   using size_type = SparseSet::size_type;
   using const_iterator = SparseSet::const_iterator;
-  using iterator = const_iterator;
 
   // --- Constructors ---
 
@@ -79,14 +78,14 @@ class View {
 
   // --- Iterators ---
 
-  [[nodiscard]] auto begin() const noexcept -> iterator {
+  [[nodiscard]] auto begin() const noexcept -> const_iterator {
     if (m_storage == nullptr) {
       return const_iterator{};
     }
     return m_storage->entities().begin();
   }
 
-  [[nodiscard]] auto end() const noexcept -> iterator {
+  [[nodiscard]] auto end() const noexcept -> const_iterator {
     if (m_storage == nullptr) {
       return const_iterator{};
     }

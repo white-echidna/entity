@@ -50,7 +50,7 @@ class OptionalIndex {
   // --- Element Access ---
 
   // Returns the stored index.
-  // Precondition: holding non-null value.
+  // Precondition: `hasValue() == true`.
   [[nodiscard]] constexpr auto value() const noexcept -> T {
     assert(hasValue());
     return m_value;
@@ -69,7 +69,6 @@ class SparseSet {
   using value_type = Entity;
   using size_type = std::vector<value_type>::size_type;
   using const_iterator = std::vector<value_type>::const_iterator;
-  using iterator = const_iterator;
 
   // --- Modifiers ---
 
@@ -92,7 +91,7 @@ class SparseSet {
 
     // --- Swap & Pop ---
     const auto id_to_delete = entity.id();
-    const auto index_to_delete = m_sparse[id_to_delete].value();
+    const auto index_to_delete = m_sparse_indices[id_to_delete].value();
 
     const auto last_entity_in_dense = m_dense_entities.back();
     const auto last_entity_id = last_entity_in_dense.id();
@@ -100,9 +99,9 @@ class SparseSet {
     // 1. Move the last element into the place of the one being removed.
     m_dense_entities[index_to_delete] = last_entity_in_dense;
     // 2. Update the sparse entry for the moved entity to point to its new loc.
-    m_sparse[last_entity_id] = OptionalIndex(index_to_delete);
+    m_sparse_indices[last_entity_id] = OptionalIndex(index_to_delete);
     // 3. Mark the sparse entry for the deleted entity as null.
-    m_sparse[id_to_delete] = OptionalIndex<size_type>();
+    m_sparse_indices[id_to_delete] = OptionalIndex<size_type>();
     // 4. Pop the now-duplicate last element from the dense array.
     m_dense_entities.pop_back();
 
@@ -112,7 +111,7 @@ class SparseSet {
   // Removes all entities from the set.
   void clear() noexcept {
     m_dense_entities.clear();
-    m_sparse.clear();
+    m_sparse_indices.clear();
   }
 
   // --- Lookup ---
@@ -136,8 +135,8 @@ class SparseSet {
     // 2. Its entry in the sparse array is not null.
     // 3. The entity version in the dense array at the stored index
     //    matches the one we are looking for.
-    return id < m_sparse.size() && m_sparse[id].hasValue() &&
-           m_dense_entities[m_sparse[id].value()].version() == version;
+    return id < m_sparse_indices.size() && m_sparse_indices[id].hasValue() &&
+           m_dense_entities[m_sparse_indices[id].value()].version() == version;
   }
 
   // --- Direct Data Access ---
@@ -146,7 +145,7 @@ class SparseSet {
   // Precondition: `contains(entity)` is true.
   [[nodiscard]] auto index(value_type entity) const noexcept -> size_type {
     assert(contains(entity) && "Entity does not exist in the set.");
-    return m_sparse[entity.id()].value();
+    return m_sparse_indices[entity.id()].value();
   }
 
   // Returns a read-only reference to the underlying dense array of entities.
@@ -187,23 +186,23 @@ class SparseSet {
   // Precondition: The sparse slot for `entity.id()` is not occupied.
   auto insertUnchecked(value_type entity) -> const_iterator {
     const auto id = entity.id();
-    if (id >= m_sparse.size()) {
-      m_sparse.resize(id + 1);
+    if (id >= m_sparse_indices.size()) {
+      m_sparse_indices.resize(id + 1);
     }
 
     assert(
-        !m_sparse[id].hasValue() &&
+        !m_sparse_indices[id].hasValue() &&
         "Entity ID slot is already occupied by another version."
     );
 
-    m_sparse[id] = OptionalIndex(m_dense_entities.size());
+    m_sparse_indices[id] = OptionalIndex(m_dense_entities.size());
     m_dense_entities.push_back(entity);
 
     return std::prev(m_dense_entities.cend());
   }
 
   std::vector<value_type> m_dense_entities;
-  std::vector<OptionalIndex<size_type>> m_sparse;
+  std::vector<OptionalIndex<size_type>> m_sparse_indices;
 };
 
 }  // namespace entity::ecs

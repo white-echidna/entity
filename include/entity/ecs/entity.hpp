@@ -18,7 +18,6 @@ using EntityType = std::uint32_t;
 struct EntityTag {};
 
 // A lightweight, versioned identifier for an entity.
-// Packs a 20-bit entity ID in the lower bits and a 12-bit version in the upper bits.
 struct Entity : StrongAlias<EntityTag, EntityType> {
   // --- Bit Layout Constants ---
 
